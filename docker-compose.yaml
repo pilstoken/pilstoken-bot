@@ -1,0 +1,7 @@
+version: '3.1'
+
+services:
+  pilstoken-bot:
+    image: pilstoken-bot:latest
+    restart: always
+    container_name: pilstoken-bot
