@@ -51,7 +51,6 @@ def escape_text(text):
         .replace("(", "\(") \
         .replace(")", "\)") \
         .replace("'", "\'") \
-        .replace("-", "\-") \
         .replace("!", "\!")
 
 
