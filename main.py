@@ -1,10 +1,7 @@
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
+from telegram import Update
 from telegram.ext import (
     Updater,
     CommandHandler,
-    CallbackQueryHandler,
-    MessageHandler,
-    Filters,
     CallbackContext,
 )
 import logging
@@ -26,7 +23,7 @@ TELEGRAM_API_TOKEN = os.environ.get("TELEGRAM_API_TOKEN")
 def start_command(update: Update, context: CallbackContext) -> None:
     msg = update.message
 
-    msg.reply_text("Hi!")
+    msg.reply_text("Cheers!")
 
 
 def fact_command(update: Update, context: CallbackContext) -> None:
@@ -60,8 +57,6 @@ def random_line(file):
 
 
 if __name__ == '__main__':
-    # START THE BOT
-
     updater = Updater(TELEGRAM_API_TOKEN, use_context=True)
 
     dispatcher = updater.dispatcher
@@ -71,11 +66,6 @@ if __name__ == '__main__':
     # commands
     dispatcher.add_handler(CommandHandler('start', start_command))
     dispatcher.add_handler(CommandHandler('fact', fact_command))
-
-    # buttons
-    # dispatcher.add_handler(CallbackQueryHandler(search_pagination_button, pattern='^pagination'))
-
-    # dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, message))
 
     updater.start_polling()
 
