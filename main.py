@@ -133,6 +133,12 @@ def when_launch(update: Update, context: CallbackContext):
     msg.reply_text("Launch is planned for May 17th, 8 PM UTC!\n\nSee /countdown for exact launch time!")
 
 
+def how_launch(update: Update, context: CallbackContext):
+    msg = update.effective_message
+
+    msg.reply_text("Fair launch is planned for May 17th, 8 PM UTC!\n\nSee /countdown for exact launch time!")
+
+
 def where_buy(update: Update, context: CallbackContext):
     msg = update.effective_message
 
@@ -223,9 +229,10 @@ if __name__ == '__main__':
     ))
 
     # wen lunch
+    updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'fair'), how_launch))
+    updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'presale'), how_launch))
     updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'launch'), when_launch))
     updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'lunch'), when_launch))
-    updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'presale'), when_launch))
     updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'ownership'), ownership))
     updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'renounce'), ownership))
     updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'shill'), shill))
