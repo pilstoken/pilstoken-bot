@@ -13,6 +13,7 @@ import random
 from dotenv import load_dotenv
 import time
 import datetime
+import text2png
 
 load_dotenv()
 
@@ -128,7 +129,6 @@ def countdown(update: Update, context: CallbackContext):
     cd = "PilsToken Launch\nCountdown\n\n %d days\n%d hours\n%d minutes\n%d seconds" % daysHoursMinutesSecondsFromSeconds(
         dateDiffInSeconds(now, launch))
 
-    import text2png
     text2png.text2png(cd, "pils.png", background_color="#fed957")
 
     # msg.reply_text(cd)
