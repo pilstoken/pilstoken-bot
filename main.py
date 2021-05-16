@@ -3,11 +3,16 @@ from telegram.ext import (
     Updater,
     CommandHandler,
     CallbackContext,
+    MessageHandler,
+    Filters,
+    RegexHandler
 )
 import logging
 import os
 import random
 from dotenv import load_dotenv
+import time
+import datetime
 
 load_dotenv()
 
@@ -82,6 +87,99 @@ def random_line(file):
     return random_lines
 
 
+def handle_new_chat_members(update: Update, context: CallbackContext):
+    msg = update.effective_message
+    try:
+        time.sleep(3)
+        # logging.info("deleting message " + str(msg))
+        bot.delete_message(
+            chat_id=msg.chat.id,
+            message_id=msg.message_id,
+        )
+    except Exception as ex:
+        if 'Message to delete not found' in str(ex):
+            logging.error('Failed to delete msg: %s', ex)
+            return
+        elif "Message can't be deleted" in str(ex):
+            logging.error('Failed to delete msg: %s', ex)
+            return
+        else:
+            raise
+
+
+def when_launch(update: Update, context: CallbackContext):
+    msg = update.effective_message
+
+    msg.reply_text("Launch is planned for May 17th, 8 PM UTC!\n\nSee /countdown for exact launch time!")
+
+
+def where_buy(update: Update, context: CallbackContext):
+    msg = update.effective_message
+
+    msg.reply_text("You can buy at May 17th, 8 PM UTC on pancakeswap!")
+
+
+def countdown(update: Update, context: CallbackContext):
+    msg = update.effective_message
+
+    now = datetime.datetime.now()
+    launch = datetime.datetime(2021, 5, 17, 22, 00, 00)
+
+    cd = "PilsToken Launch\nCountdown\n\n %d days\n%d hours\n%d minutes\n%d seconds" % daysHoursMinutesSecondsFromSeconds(
+        dateDiffInSeconds(now, launch))
+
+    import text2png
+    text2png.text2png(cd, "pils.png", background_color="#fed957")
+
+    # msg.reply_text(cd)
+    msg.reply_photo(open("pils.png", 'rb'))
+
+
+def dateDiffInSeconds(date1, date2):
+    timedelta = date2 - date1
+    return timedelta.days * 24 * 3600 + timedelta.seconds
+
+
+def daysHoursMinutesSecondsFromSeconds(seconds):
+    minutes, seconds = divmod(seconds, 60)
+    hours, minutes = divmod(minutes, 60)
+    days, hours = divmod(hours, 24)
+    return (days, hours, minutes, seconds)
+
+
+def shill(update: Update, context: CallbackContext):
+    msg = update.effective_message
+
+    msg.reply_text("We have a dedicated marketing team, thank you! "
+                   "For all other matters, feel free to contact @Mason_98 or @kai23.")
+
+
+def ownership(update: Update, context: CallbackContext):
+    msg = update.effective_message
+
+    msg.reply_text("Ownership will be renounced after launch!")
+
+
+def handle_left_chat_member(update: Update, context: CallbackContext):
+    msg = update.effective_message
+    try:
+        time.sleep(3)
+        # logging.info("deleting message " + str(msg))
+        bot.delete_message(
+            chat_id=msg.chat.id,
+            message_id=msg.message_id,
+        )
+    except Exception as ex:
+        if 'Message to delete not found' in str(ex):
+            logging.error('Failed to delete join message: %s' % ex)
+            return
+        elif "Message can't be deleted" in str(ex):
+            logging.error('Failed to delete msg: %s', ex)
+            return
+        else:
+            raise
+
+
 if __name__ == '__main__':
     updater = Updater(TELEGRAM_API_TOKEN, use_context=True)
 
@@ -94,6 +192,24 @@ if __name__ == '__main__':
     dispatcher.add_handler(CommandHandler('fact', fact_command))
     dispatcher.add_handler(CommandHandler('url', url_command))
     dispatcher.add_handler(CommandHandler('website', website_command))
+    dispatcher.add_handler(CommandHandler('countdown', countdown))
+
+    # join + leave messages
+    dispatcher.add_handler(MessageHandler(
+        Filters.status_update.new_chat_members, handle_new_chat_members
+    ))
+    dispatcher.add_handler(MessageHandler(
+        Filters.status_update.left_chat_member, handle_left_chat_member
+    ))
+
+    # wen lunch
+    updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'launch'), when_launch))
+    updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'presale'), when_launch))
+    updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'ownership'), ownership))
+    updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'renounce'), ownership))
+    updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'shill'), shill))
+    updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'where.*buy'), where_buy))
+    updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'countdown'), where_buy))
 
     updater.start_polling()
 
