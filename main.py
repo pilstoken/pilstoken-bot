@@ -130,7 +130,15 @@ def handle_new_chat_members(update: Update, context: CallbackContext):
 def when_launch(update: Update, context: CallbackContext):
     msg = update.effective_message
 
-    msg.reply_text("Launch is planned for May 17th, 8 PM UTC!\n\nSee /countdown for exact launch time!")
+    text = "aunch is planned for May 17th, 8 PM UTC!\n\nSee /countdown for exact launch time!"
+
+    if msg.text is not None:
+        if "fair" in msg.text.lower() or "presale" in msg.text.lower():
+            text = "Fair l" + text
+        else:
+            text = "L" + text
+
+    msg.reply_text(text)
 
 
 def how_launch(update: Update, context: CallbackContext):
