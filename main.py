@@ -210,7 +210,7 @@ if __name__ == '__main__':
     updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'renounce'), ownership))
     updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'shill'), shill))
     updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'where.*buy'), where_buy))
-    updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'countdown'), where_buy))
+    updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'countdown'), countdown))
 
     updater.start_polling()
 
