@@ -204,6 +204,7 @@ if __name__ == '__main__':
 
     # wen lunch
     updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'launch'), when_launch))
+    updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'lunch'), when_launch))
     updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'presale'), when_launch))
     updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'ownership'), ownership))
     updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'renounce'), ownership))
