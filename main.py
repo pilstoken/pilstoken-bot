@@ -39,22 +39,34 @@ def start_command(update: Update, context: CallbackContext) -> None:
 def url_command(update: Update, context: CallbackContext) -> None:
     msg = update.message
 
-    msg.reply_text(get_website_markup(), parse_mode='MarkdownV2')
+    msg.reply_text(get_website_markdown(), parse_mode='MarkdownV2')
 
 
 def website_command(update: Update, context: CallbackContext) -> None:
     msg = update.message
 
-    msg.reply_text(get_website_markup(), parse_mode='MarkdownV2')
+    msg.reply_text(get_website_markdown(), parse_mode='MarkdownV2')
 
 
 def socials_command(update: Update, context: CallbackContext) -> None:
     msg = update.message
 
-    msg.reply_text(get_website_markup(), parse_mode='MarkdownV2')
+    msg.reply_photo(open("socials.jpg", 'rb'), caption=get_socials_markdown(), parse_mode='MarkdownV2')
 
 
-def get_website_markup():
+def get_socials_markdown():
+    beer_emoji = u'\U0001F37A'
+
+    text = beer_emoji + " *PilsToken Socials* " + beer_emoji + "\n\n"
+    text = text + "*Twitter:* [@PilsToken](https://twitter.com/PilsToken)\n"
+    text = text + "*Github:* [/pilstoken](https://github.com/pilstoken)\n"
+    text = text + "*Telegram:* [@pilstoken](https://t.me/pilstoken)\n"
+    text = text + "*Youtube:* [PilsToken](https://www.youtube.com/channel/UCiY3SNLqAZyOW2NvP1d9mpw)"
+
+    return text
+
+
+def get_website_markdown():
     beer_emoji = u'\U0001F37A'
 
     text = beer_emoji + " *website* " + beer_emoji + "\n\n"
@@ -219,6 +231,9 @@ if __name__ == '__main__':
     updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'shill'), shill))
     updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'where.*buy'), where_buy))
     updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'countdown'), countdown))
+    updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'twitter'), socials_command))
+    updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'github'), socials_command))
+    updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'socials'), socials_command))
 
     updater.start_polling()
 
