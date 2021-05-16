@@ -249,6 +249,7 @@ if __name__ == '__main__':
     updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'twitter'), socials_command))
     updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'github'), socials_command))
     updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'socials'), socials_command))
+    updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'promotion'), shill))
 
     updater.start_polling()
 
