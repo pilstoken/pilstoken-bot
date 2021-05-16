@@ -24,6 +24,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 TELEGRAM_API_TOKEN = os.environ.get("TELEGRAM_API_TOKEN")
+LAUNCH_HOUR = os.environ.get("LAUNCH_HOUR")
 URL = "pils.finance"
 BEER_EMOJI = u'\U0001F37A'
 ARROW_RIGHT = u'\U000027A1'
@@ -42,6 +43,12 @@ def url_command(update: Update, context: CallbackContext) -> None:
 
 
 def website_command(update: Update, context: CallbackContext) -> None:
+    msg = update.message
+
+    msg.reply_text(get_website_markup(), parse_mode='MarkdownV2')
+
+
+def socials_command(update: Update, context: CallbackContext) -> None:
     msg = update.message
 
     msg.reply_text(get_website_markup(), parse_mode='MarkdownV2')
@@ -124,7 +131,7 @@ def countdown(update: Update, context: CallbackContext):
     msg = update.effective_message
 
     now = datetime.datetime.now()
-    launch = datetime.datetime(2021, 5, 17, 22, 00, 00)
+    launch = datetime.datetime(2021, 5, 17, int(LAUNCH_HOUR), 00, 00)
 
     cd = "PilsToken Launch\nCountdown\n\n %d days\n%d hours\n%d minutes\n%d seconds" % daysHoursMinutesSecondsFromSeconds(
         dateDiffInSeconds(now, launch))
@@ -193,6 +200,7 @@ if __name__ == '__main__':
     dispatcher.add_handler(CommandHandler('url', url_command))
     dispatcher.add_handler(CommandHandler('website', website_command))
     dispatcher.add_handler(CommandHandler('countdown', countdown))
+    dispatcher.add_handler(CommandHandler('socials', socials_command))
 
     # join + leave messages
     dispatcher.add_handler(MessageHandler(
