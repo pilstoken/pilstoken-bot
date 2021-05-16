@@ -3,3 +3,4 @@ fact - Drop a random beer fact
 url - Reply with the website url
 website - Reply with the website url
 countdown - WHEN LAUNCH?!?!?
+socials - PilsToken social accounts
