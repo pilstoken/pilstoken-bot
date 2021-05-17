@@ -183,8 +183,15 @@ def daysHoursMinutesSecondsFromSeconds(seconds):
 def shill(update: Update, context: CallbackContext):
     msg = update.effective_message
 
-    msg.reply_text("We have a dedicated marketing team, thank you! "
+    msg.reply_text("We have a dedicated marketing team, thank you!\n"
                    "For all other matters, feel free to contact @Mason_98 or @kai23.")
+
+
+def address(update: Update, context: CallbackContext):
+    msg = update.effective_message
+
+    msg.reply_text("Contract address will be published at launch!\n"
+                   "See /countdown for exact launch time!")
 
 
 def ownership(update: Update, context: CallbackContext):
@@ -250,6 +257,9 @@ if __name__ == '__main__':
     updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'github'), socials_command))
     updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'socials'), socials_command))
     updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'promotion'), shill))
+    updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'marketing'), shill))
+    updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'address'), address))
+    updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'adress'), address))
 
     updater.start_polling()
 
