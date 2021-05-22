@@ -247,7 +247,7 @@ if __name__ == '__main__':
     updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(fair)'), how_launch))
     updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(presale)'), how_launch))
     updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(launch)'), when_launch))
-    updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(lunch/i)'), when_launch))
+    updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(lunch)'), when_launch))
     updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(ownership)'), ownership))
     updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(renounce)'), ownership))
     updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(shill)'), shill))
