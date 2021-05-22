@@ -130,7 +130,7 @@ def handle_new_chat_members(update: Update, context: CallbackContext):
 def when_launch(update: Update, context: CallbackContext):
     msg = update.effective_message
 
-    text = "aunch is planned for May 17th, 8 PM UTC!\n\nSee /countdown for exact launch time!"
+    text = "aunch is planned for May 28th, 8 PM UTC!\n\nSee /countdown for exact launch time!"
 
     if msg.text is not None:
         if "fair" in msg.text.lower() or "presale" in msg.text.lower():
@@ -144,22 +144,22 @@ def when_launch(update: Update, context: CallbackContext):
 def how_launch(update: Update, context: CallbackContext):
     msg = update.effective_message
 
-    msg.reply_text("Fair launch is planned for May 17th, 8 PM UTC!\n\nSee /countdown for exact launch time!")
+    msg.reply_text("Fair launch is planned for May 28th, 8 PM UTC!\n\nSee /countdown for exact launch time!")
 
 
 def where_buy(update: Update, context: CallbackContext):
     msg = update.effective_message
 
-    msg.reply_text("You can buy at May 17th, 8 PM UTC on pancakeswap!")
+    msg.reply_text("You can buy at May 28th, 8 PM UTC on pancakeswap!")
 
 
 def countdown(update: Update, context: CallbackContext):
     msg = update.effective_message
 
     now = datetime.datetime.now()
-    launch = datetime.datetime(2021, 5, 17, int(LAUNCH_HOUR), 00, 00)
+    launch = datetime.datetime(2021, 5, 28, int(LAUNCH_HOUR), 00, 00)
 
-    cd = "PilsToken Launch\nCountdown\n\n %d days\n%d hours\n%d minutes\n%d seconds" % daysHoursMinutesSecondsFromSeconds(
+    cd = "PilsTokenV2 Launch\nCountdown\n\n %d days\n%d hours\n%d minutes\n%d seconds" % daysHoursMinutesSecondsFromSeconds(
         dateDiffInSeconds(now, launch))
 
     text2png.text2png(cd, "pils.png", background_color="#fed957")
