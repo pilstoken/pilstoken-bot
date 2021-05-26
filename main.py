@@ -184,7 +184,13 @@ def shill(update: Update, context: CallbackContext):
     msg = update.effective_message
 
     msg.reply_text("We have a dedicated marketing team, thank you!\n"
-                   "For all other matters, feel free to contact @Mason_98 or @kai23.")
+                   "For all other matters, feel free to contact @Mason_PILS or @kai23.")
+
+
+def admin_dev(update: Update, context: CallbackContext):
+    msg = update.effective_message
+
+    msg.reply_text("If you are looking for an admin or dev, feel free to contact @Mason_PILS or @kai23.")
 
 
 def address(update: Update, context: CallbackContext):
@@ -246,20 +252,35 @@ if __name__ == '__main__':
     # wen lunch
     updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(fair)'), how_launch))
     updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(presale)'), how_launch))
+
     updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(launch)'), when_launch))
     updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(lunch)'), when_launch))
+
     updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(ownership)'), ownership))
     updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(renounce)'), ownership))
-    updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(shill)'), shill))
+
     updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(where.*buy)'), where_buy))
+
     updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(countdown)'), countdown))
+
     updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(twitter)'), socials_command))
     updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(github)'), socials_command))
     updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(socials)'), socials_command))
-    updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(promotion)'), shill))
+
+    updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(shill)'), shill))
+    updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(promot)'), shill))
+    updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(cms)'), shill))
+    updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(reddit)'), shill))
     updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(marketing)'), shill))
+    updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(advert)'), shill))
+
+    updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(admin)'), admin_dev))
+    updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(dev)'), admin_dev))
+
     updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(address)'), address))
     updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(adress)'), address))
+
+    updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(website)'), website_command))
 
     updater.start_polling()
 
