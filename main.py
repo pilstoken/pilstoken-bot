@@ -14,6 +14,8 @@ from dotenv import load_dotenv
 import time
 import datetime
 import text2png
+import re
+import csv
 
 load_dotenv()
 
@@ -206,6 +208,37 @@ def ownership(update: Update, context: CallbackContext):
     msg.reply_text("Ownership will be renounced after launch!")
 
 
+def check_airdrop_address(bsc_address):
+    with open('token_holders.csv') as csv_file:
+        csv_reader = csv.reader(csv_file, delimiter=',')
+
+        for row in csv_reader:
+            if row[0].upper() == bsc_address.upper():
+                return float(row[1])
+
+    return float(0)
+
+
+def airdrop(update: Update, context: CallbackContext):
+    msg = update.effective_message
+
+    p = re.compile("0x[a-fA-F0-9]{40}")
+    result = p.search(msg.text)
+
+    bsc_address = result.group(0)
+
+    text = "The BSC address *" + bsc_address + "* "
+
+    airdrop_amount = check_airdrop_address(bsc_address)
+
+    if airdrop_amount > 0:
+        text = text + "will participate in the airdrop and receives " + str(airdrop_amount) + " PILSv2 tokens!"
+    else:
+        text = text + "was no PILSv1 holder and therefore will not participate in the airdrop!"
+
+    msg.reply_text(escape_text(text), parse_mode='MarkdownV2')
+
+
 def handle_left_chat_member(update: Update, context: CallbackContext):
     msg = update.effective_message
     try:
@@ -248,6 +281,9 @@ if __name__ == '__main__':
     dispatcher.add_handler(MessageHandler(
         Filters.status_update.left_chat_member, handle_left_chat_member
     ))
+
+    # airdrop info
+    updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'0x[a-fA-F0-9]{40}'), airdrop))
 
     # wen lunch
     updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(fair)'), how_launch))
