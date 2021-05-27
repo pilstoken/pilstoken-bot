@@ -232,7 +232,7 @@ def airdrop(update: Update, context: CallbackContext):
     airdrop_amount = check_airdrop_address(bsc_address)
 
     if airdrop_amount > 0:
-        text = text + "will participate in the airdrop and receives " + str(airdrop_amount) + " PILSv2 tokens!"
+        text = text + "will participate in the airdrop and receives *" + str(airdrop_amount) + "* PILSv2 tokens!"
     else:
         text = text + "was no PILSv1 holder and therefore will not participate in the airdrop!"
 
