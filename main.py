@@ -292,6 +292,9 @@ if __name__ == '__main__':
     dispatcher.add_handler(CommandHandler('website', website_command))
     dispatcher.add_handler(CommandHandler('countdown', countdown))
     dispatcher.add_handler(CommandHandler('socials', socials_command))
+    dispatcher.add_handler(CommandHandler('contract', address))
+    dispatcher.add_handler(CommandHandler('address', address))
+    dispatcher.add_handler(CommandHandler('chart', chart))
 
     # join + leave messages
     dispatcher.add_handler(MessageHandler(
