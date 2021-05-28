@@ -166,7 +166,7 @@ def liquidity(update: Update, context: CallbackContext):
     msg = update.effective_message
 
     msg.reply_text(
-        "🔒 Liquidity locked https://bscscan.com/tx/0xd03c38e4a66ef412647a1906af382153b4f80ef8b1d1e3f4e3943bccde056c2a")
+        "🔒 Liquidity locked https://dxsale.app/app/pages/dxlockview?id=1&add=0xbB6D068D6f8deEa09EA8e530b1e17B43427dAC17&type=lplock&chain=BSC")
 
 
 def countdown(update: Update, context: CallbackContext):
