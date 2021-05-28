@@ -146,13 +146,27 @@ def when_launch(update: Update, context: CallbackContext):
 def how_launch(update: Update, context: CallbackContext):
     msg = update.effective_message
 
-    msg.reply_text("Fair launch is planned for May 28th, 8 PM UTC!\n\nSee /countdown for exact launch time!")
+    msg.reply_text("Fair launch was at May 28th, 8 PM UTC!")
 
 
 def where_buy(update: Update, context: CallbackContext):
     msg = update.effective_message
 
-    msg.reply_text("You can buy at May 28th, 8 PM UTC on pancakeswap!")
+    msg.reply_text(
+        "You can buy at 🥞 Pancakeswap https://exchange.pancakeswap.finance/#/swap?outputCurrency=0xc136a53348d5af2d104e9252041175bf25783bce")
+
+
+def chart(update: Update, context: CallbackContext):
+    msg = update.effective_message
+
+    msg.reply_text("💩 Chart https://poocoin.app/tokens/0xc136a53348d5af2d104e9252041175bf25783bce")
+
+
+def liquidity(update: Update, context: CallbackContext):
+    msg = update.effective_message
+
+    msg.reply_text(
+        "🔒 Liquidity locked https://bscscan.com/tx/0xd03c38e4a66ef412647a1906af382153b4f80ef8b1d1e3f4e3943bccde056c2a")
 
 
 def countdown(update: Update, context: CallbackContext):
@@ -199,7 +213,8 @@ def address(update: Update, context: CallbackContext):
     msg = update.effective_message
 
     text = "Contract address: *0xc136a53348d5af2d104e9252041175bf25783bce*\n\n"
-    text = text + ARROW_RIGHT + " https://bscscan.com/token/0xc136a53348d5af2d104e9252041175bf25783bce"
+    text = text + "✅ Verified contract https://bscscan.com/tx/0xc136a53348d5af2d104e9252041175bf25783bce\n\n"
+    text = text + "✅ Rugscreen https://www.rugscreen.com/scan/certificate?tokenid=075a3a9ea8"
 
     text = escape_text(text)
 
@@ -321,6 +336,12 @@ if __name__ == '__main__':
     updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(adress)'), address))
 
     updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(website)'), website_command))
+
+    updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(chart)'), chart))
+    updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(poocoin)'), chart))
+
+    updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(liquidity)'), liquidity))
+    updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(lock)'), liquidity))
 
     updater.start_polling()
 
