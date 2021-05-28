@@ -4,3 +4,6 @@ url - Reply with the website url
 website - Reply with the website url
 countdown - WHEN LAUNCH?!?!?
 socials - PilsToken social accounts
+contract - PilsToken contract address
+address - PilsToken contract address
+chart - PilsToken chart
