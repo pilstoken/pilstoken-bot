@@ -342,6 +342,8 @@ if __name__ == '__main__':
 
     updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(liquidity)'), liquidity))
     updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(lock)'), liquidity))
+    updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(lq)'), liquidity))
+    updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(dx)'), liquidity))
 
     updater.start_polling()
 
