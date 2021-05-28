@@ -333,6 +333,7 @@ if __name__ == '__main__':
     updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(dev)'), admin_dev))
 
     updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(address)'), address))
+    updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(contract)'), address))
     updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(adress)'), address))
 
     updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(website)'), website_command))
