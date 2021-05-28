@@ -198,8 +198,12 @@ def admin_dev(update: Update, context: CallbackContext):
 def address(update: Update, context: CallbackContext):
     msg = update.effective_message
 
-    msg.reply_text("Contract address will be published at launch!\n"
-                   "See /countdown for exact launch time!")
+    text = "Contract address: *0xc136a53348d5af2d104e9252041175bf25783bce*\n\n"
+    text = text + ARROW_RIGHT + " https://bscscan.com/token/0xc136a53348d5af2d104e9252041175bf25783bce"
+
+    text = escape_text(text)
+
+    msg.reply_text(text, parse_mode='MarkdownV2')
 
 
 def ownership(update: Update, context: CallbackContext):
