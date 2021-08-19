@@ -148,7 +148,7 @@ def where_buy(update: Update, context: CallbackContext):
     msg = update.effective_message
 
     msg.reply_text(
-        "You can buy at 🥞 Pancakeswap https://exchange.pancakeswap.finance/#/swap?outputCurrency=0xc136a53348d5af2d104e9252041175bf25783bce")
+        "You can buy at 🥞 Pancakeswap https://pancakeswap.finance/swap?outputCurrency=0xC136a53348D5AF2d104E9252041175BF25783BCe")
 
 
 def chart(update: Update, context: CallbackContext):
