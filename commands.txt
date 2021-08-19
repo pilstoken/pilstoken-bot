@@ -3,6 +3,9 @@ fact - Drop a random beer fact
 url - Reply with the website url
 website - Reply with the website url
 countdown - WHEN LAUNCH?!?!?
+buy - Where to buy PilsToken $PILS
+ad - Marketing / ads
+launch - PilsToken launch
 socials - PilsToken social accounts
 contract - PilsToken contract address
 address - PilsToken contract address

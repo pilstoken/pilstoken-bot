@@ -101,6 +101,7 @@ def escape_text(text):
         .replace("<", "\<") \
         .replace(">", "\>") \
         .replace("'", "\'") \
+        .replace("=", "\=") \
         .replace("!", "\!")
 
 
@@ -132,13 +133,7 @@ def handle_new_chat_members(update: Update, context: CallbackContext):
 def when_launch(update: Update, context: CallbackContext):
     msg = update.effective_message
 
-    text = "aunch is planned for May 28th, 8 PM UTC!\n\nSee /countdown for exact launch time!"
-
-    if msg.text is not None:
-        if "fair" in msg.text.lower() or "presale" in msg.text.lower():
-            text = "Fair l" + text
-        else:
-            text = "L" + text
+    text = "Fair launch was at May 28th, 8 PM UTC!\n\nSee /countdown for exact launch time!"
 
     msg.reply_text(text)
 
@@ -175,13 +170,18 @@ def countdown(update: Update, context: CallbackContext):
     now = datetime.datetime.now()
     launch = datetime.datetime(2021, 5, 28, int(LAUNCH_HOUR), 00, 00)
 
-    cd = "PilsTokenV2 Launch\nCountdown\n\n %d days\n%d hours\n%d minutes\n%d seconds" % daysHoursMinutesSecondsFromSeconds(
-        dateDiffInSeconds(now, launch))
+    if launch > now:
+        cd = "PilsTokenV2 Launch\nCountdown\n\n %d days\n%d hours\n%d minutes\n%d seconds" % daysHoursMinutesSecondsFromSeconds(
+            dateDiffInSeconds(now, launch))
 
-    text2png.text2png(cd, "pils.png", background_color="#fed957")
+        text2png.text2png(cd, "pils.png", background_color="#fed957")
 
-    # msg.reply_text(cd)
-    msg.reply_photo(open("pils.png", 'rb'))
+        msg.reply_photo(open("pils.png", 'rb'))
+    else:
+        text = "PilsToken has launched %d days, %d hours, %d minutes and %d seconds" \
+               % daysHoursMinutesSecondsFromSeconds(dateDiffInSeconds(now, launch)) + " ago!"
+
+        msg.reply_text(text.replace("-", ""))
 
 
 def dateDiffInSeconds(date1, date2):
@@ -213,7 +213,7 @@ def address(update: Update, context: CallbackContext):
     msg = update.effective_message
 
     text = "Contract address: *0xc136a53348d5af2d104e9252041175bf25783bce*\n\n"
-    text = text + "✅ Verified contract https://bscscan.com/tx/0xc136a53348d5af2d104e9252041175bf25783bce\n\n"
+    text = text + "✅ Verified contract https://bscscan.com/address/0xc136a53348d5af2d104e9252041175bf25783bce\n\n"
     text = text + "✅ Rugscreen https://www.rugscreen.com/scan/certificate?tokenid=075a3a9ea8"
 
     text = escape_text(text)
@@ -291,6 +291,9 @@ if __name__ == '__main__':
     dispatcher.add_handler(CommandHandler('url', url_command))
     dispatcher.add_handler(CommandHandler('website', website_command))
     dispatcher.add_handler(CommandHandler('countdown', countdown))
+    dispatcher.add_handler(CommandHandler('buy', where_buy))
+    dispatcher.add_handler(CommandHandler('ad', shill))
+    dispatcher.add_handler(CommandHandler('launch', when_launch))
     dispatcher.add_handler(CommandHandler('socials', socials_command))
     dispatcher.add_handler(CommandHandler('contract', address))
     dispatcher.add_handler(CommandHandler('address', address))
@@ -304,51 +307,51 @@ if __name__ == '__main__':
         Filters.status_update.left_chat_member, handle_left_chat_member
     ))
 
-    # airdrop info
-    updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'0x[a-fA-F0-9]{40}'), airdrop))
-
-    # wen lunch
-    updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(fair)'), how_launch))
-    updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(presale)'), how_launch))
-
-    # updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(launch)'), when_launch))
-    # updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(lunch)'), when_launch))
-
-    updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(ownership)'), ownership))
-    updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(renounce)'), ownership))
-
-    updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(where.*buy)'), where_buy))
-
-    updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(countdown)'), countdown))
-
-    updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(twitter)'), socials_command))
-    updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(github)'), socials_command))
-    updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(socials)'), socials_command))
-
-    updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(shill)'), shill))
-    updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(promot)'), shill))
-    updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(cms)'), shill))
-    updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(reddit)'), shill))
-    updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(marketing)'), shill))
-    updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(advert)'), shill))
-
-    updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(admin)'), admin_dev))
-    updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(dev)'), admin_dev))
-
-    updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(address)'), address))
-    updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(contract)'), address))
-    updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(adress)'), address))
-
-    updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(website)'), website_command))
-
-    updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(chart)'), chart))
-    updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(poocoin)'), chart))
-
-    updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(liquidity)'), liquidity))
-    updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(lock)'), liquidity))
-    updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(lq)'), liquidity))
-    updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(liq)'), liquidity))
-    updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(dx)'), liquidity))
+    # # airdrop info
+    # updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'0x[a-fA-F0-9]{40}'), airdrop))
+    #
+    # # wen lunch
+    # updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(fair)'), how_launch))
+    # updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(presale)'), how_launch))
+    #
+    # # updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(launch)'), when_launch))
+    # # updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(lunch)'), when_launch))
+    #
+    # updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(ownership)'), ownership))
+    # updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(renounce)'), ownership))
+    #
+    # updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(where.*buy)'), where_buy))
+    #
+    # updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(countdown)'), countdown))
+    #
+    # updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(twitter)'), socials_command))
+    # updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(github)'), socials_command))
+    # updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(socials)'), socials_command))
+    #
+    # updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(shill)'), shill))
+    # updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(promot)'), shill))
+    # updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(cms)'), shill))
+    # updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(reddit)'), shill))
+    # updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(marketing)'), shill))
+    # updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(advert)'), shill))
+    #
+    # updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(admin)'), admin_dev))
+    # updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(dev)'), admin_dev))
+    #
+    # updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(address)'), address))
+    # updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(contract)'), address))
+    # updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(adress)'), address))
+    #
+    # updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(website)'), website_command))
+    #
+    # updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(chart)'), chart))
+    # updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(poocoin)'), chart))
+    #
+    # updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(liquidity)'), liquidity))
+    # updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(lock)'), liquidity))
+    # updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(lq)'), liquidity))
+    # updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(liq)'), liquidity))
+    # updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'(?i)(dx)'), liquidity))
 
     updater.start_polling()
 
